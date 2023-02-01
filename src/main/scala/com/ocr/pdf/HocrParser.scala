@@ -104,7 +104,7 @@ object HocrParser {
           buf.delete(0, buf.length)
         }
         case "span" /* ocr_line */ if words.nonEmpty =>
-          callback(HocrLine(lineBoundingBox, Seq(words: _*)))
+          callback(HocrLine(lineBoundingBox, words.toSeq))
           words.clear
         case _ => {}
       }

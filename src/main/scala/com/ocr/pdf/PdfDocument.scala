@@ -93,7 +93,7 @@ object PdfDocument {
 
     override def hasNext: Boolean = nextPageNumber < pdfDocument.nPages
 
-    override def next: Future[PdfPage] = {
+    override def next(): Future[PdfPage] = {
       Future(blocking {
         val pageNumber = nextPageNumber
         nextPageNumber += 1
