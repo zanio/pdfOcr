@@ -2,6 +2,7 @@ package com.ocr.pdf
 
 
 import com.ocr.exceptions.{PdfEncryptedException, PdfInvalidException}
+import org.scalatest.Ignore
 import org.scalatest.concurrent.ScalaFutures.convertScalaFuture
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
@@ -24,10 +25,10 @@ class PdfDocumentSpec  extends AnyFlatSpec with should.Matchers {
     PdfDocument.load(path)
   }
 
-  it should "load" in {
+
     it should "loads a valid PDF" in {
       val pdfDocument = load("empty-page.pdf").futureValue
-      pdfDocument.path.getFileName.toString must equal("empty-page.pdf")
+      pdfDocument.path.getFileName.toString should equal("empty-page.pdf")
       pdfDocument.close
     }
 
@@ -52,25 +53,23 @@ class PdfDocumentSpec  extends AnyFlatSpec with should.Matchers {
       pdfDocument.write(outPath).futureValue should  equal(())
       Files.delete(outPath)
     }
-  }
 
-  it should "nPages" in {
+
     it should "returns the number of pages" in {
       val pdf = load("empty-page.pdf").futureValue
       pdf.nPages should  equal(1)
       pdf.close
     }
-  }
 
-  it should "pages" in {
+
     it should "iterates over each page" in {
       val pdf = load("2-pages.pdf").futureValue
       val it = pdf.pages
       try {
         it.hasNext should  equal(true)
-        it.next.futureValue.toText must equal("Page 1\n")
+        it.next.futureValue.toText should  equal("Page 1\n")
         it.hasNext should equal(true)
-        it.next.futureValue.toText must equal("Page 2\n")
+        it.next.futureValue.toText should equal("Page 2\n")
         it.hasNext should equal(false)
       } finally {
         pdf.close
@@ -88,5 +87,5 @@ class PdfDocumentSpec  extends AnyFlatSpec with should.Matchers {
         pdf.close
       }
     }
-  }
+
 }

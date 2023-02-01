@@ -1,5 +1,7 @@
 package com.ocr
 
+import com.typesafe.scalalogging.Logger
+
 import java.nio.file.Paths
 import java.util.Locale
 import java.util.concurrent.{Executors, ThreadFactory}
@@ -16,6 +18,7 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     if (args.length != 2) {
+      println(args.mkString("Array(", ", ", ")"))
       System.err.println("Usage: pdfocr in.pdf out.pdf")
       System.exit(1)
     }

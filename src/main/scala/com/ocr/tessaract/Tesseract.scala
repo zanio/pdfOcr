@@ -65,7 +65,7 @@ class Tesseract(val options: TesseractOptions) {
         source.close
 
         val nBytes = byteArrays.foldLeft(0) { (s, arr) => s + arr.length }
-        val ret = new Array[Byte](nBytes)
+        val ret = new Array[Byte](nBytes) // We are copying all the item from each list item into the Array object
         byteArrays.foldLeft(0) { (i, arr) => System.arraycopy(arr, 0, ret, i, arr.length); i + arr.length }
         return ret
       }
@@ -108,14 +108,14 @@ class Tesseract(val options: TesseractOptions) {
   }
 
   private def inThread[A](f: => A): Future[A] = {
-    val promise = Promise[A]()
+    val promise = Promise[A]() //
 
     val thread = new Thread() {
       override def run() = {
-        promise.success(f)
+          promise.success(f)
       }
     }
-    thread.setDaemon(true)
+    thread.setDaemon(true) // Does not prevent the jvm from exiting if the application is terminated
     thread.start
 
     promise.future
